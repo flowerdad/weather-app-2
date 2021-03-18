@@ -18,9 +18,9 @@
 							<view class="order">
 								<u-tabs class="" :list="itemTab" :is-scroll="false" :current="itemTabCurrent" @change="itemTabChange"></u-tabs>
 								<!-- <u-tabs :list="childrenTab" :is-scroll="false" :current="childrenTabCurrent" @change="childrenTabChange"></u-tabs> -->
-								<u-row gutter="16" class="u-margin-top-30">
+								<u-row gutter="20" class="u-margin-top-30">
 									<u-col span="8">
-										<u-input v-model="timevalue" type="select" :border="true" @click="timeShow = true" />
+										<u-input v-model="timeValue" type="select" :border="true" @click="timeShow = true" />
 										<u-picker v-model="timeShow" mode="time" :params="timeParams" @confirm='timeConfirm' @cancel="timeCancel"></u-picker>
 									</u-col>
 									<u-col span="2" text-align="center">
@@ -28,6 +28,12 @@
 									</u-col>
 									<u-col span="2" text-align="center">
 										<u-icon name="rewind-right" size='50' color="#c0c4cc"></u-icon>
+									</u-col>
+								</u-row>
+								<u-row gutter="20" class="u-margin-top-30">
+									<u-col span="12">
+										<u-input v-model="regioValue" type="select" :border="true" @click="regioShow = true" />
+										<u-select v-model="regioShow" :default-value='[0,1]' mode="mutil-column-auto" :list="regionList" @confirm="regioConfirm"></u-select>
 									</u-col>
 								</u-row>
 							</view>
@@ -41,7 +47,7 @@
 										<u-th class="u-th">低温</u-th>
 										<u-th class="u-th">单站整点</u-th>
 									</u-tr>
-									<u-tr class="u-tr" v-for="item in 20">
+									<u-tr class="u-tr" v-for="item in 20" :key='item'>
 										<u-td class="u-td">东城</u-td>
 										<u-td class="u-td" width="200rpx">天安门天安门</u-td>
 										<u-td class="u-td">1.2</u-td>
@@ -57,7 +63,40 @@
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;">
 						<view class="page-box">
-							3因为内部的滑动机制限制，请将tabs组件和swiper组件的current用不同变量赋值
+							<view class="order">
+								<u-tabs class="" :list="itemTab" :is-scroll="false" :current="itemTabCurrent" @change="itemTabChange"></u-tabs>
+								<!-- <u-tabs :list="childrenTab" :is-scroll="false" :current="childrenTabCurrent" @change="childrenTabChange"></u-tabs> -->
+								<u-row gutter="20" class="u-margin-top-30">
+									<u-col span="8">
+										<u-input v-model="timeValue" type="select" :border="true" @click="timeShow = true" />
+										<u-picker v-model="timeShow" mode="time" :params="timeParams" @confirm='timeConfirm' @cancel="timeCancel"></u-picker>
+									</u-col>
+									<u-col span="2" text-align="center">
+										<u-icon name="rewind-left" size='50' color="#c0c4cc"></u-icon>
+									</u-col>
+									<u-col span="2" text-align="center">
+										<u-icon name="rewind-right" size='50' color="#c0c4cc"></u-icon>
+									</u-col>
+								</u-row>
+								<u-row gutter="20" class="u-margin-top-30">
+									<u-col span="12">
+										<u-input v-model="regioValue" type="select" :border="true" @click="regioShow = true" />
+										<u-select v-model="regioShow" :default-value='[0,1]' mode="mutil-column-auto" :list="regionList" @confirm="regioConfirm"></u-select>
+									</u-col>
+								</u-row>
+							</view>
+							<view class="order">
+								<u-image width="100%" src="/static/data.png" mode="widthFix"></u-image>
+								<view class='u-font-12 u-color u-type-info-dark'>
+									<p class='u-margin-top-12'>全市共有591个自动站，其中可测气温自动站共有549个。截至目前，18:55数据以及达549站。</p>
+									<p class='u-margin-top-12'>2021-3-19 02:35 至 2021-3-19 02:35。</p>
+									<p class='u-margin-top-12'>最高温度：17.6℃，站名：【通州】 满庄</p>
+									<p class='u-margin-top-12'>最低温度：11.6℃，站名：【大兴】 机场</p>
+									<p class='u-margin-top-12'>大于等于35℃的站有：0个</p>
+									<p class='u-margin-top-12'>大于等于37℃的站有：0个</p>
+									<p class='u-margin-top-12'>大于等于40℃的站有：0个</p>
+								</view>
+							</view>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -67,6 +106,7 @@
 </template>
 
 <script>
+	import moment from "moment"; 
 	export default {
 		data() {
 			return {
@@ -80,8 +120,6 @@
 				}, {
 					name: '图文'
 				}],
-				current: 0, 
-				swiperCurrent: 0,
 				itemTab: [{
 					name: '降水'
 				}, {
@@ -91,7 +129,6 @@
 				}, {
 					name: '能见度'
 				}],
-				itemTabCurrent:0,
 				childrenTab: [{
 					name: '当前'
 				}, {
@@ -99,10 +136,39 @@
 				}, {
 					name: '最低'
 				}],
+				regionList: [{
+					value: 1,
+					label: '北京市',
+					children: [	
+						{
+							value: 3,
+							label: '东城区'
+						},
+						{
+							value: 4,
+							label: '西城区'
+						}
+					]
+				},{
+					value: 5,
+					label: '天津市',
+					children: [
+						{
+							value: 6,
+							label: '河东区'
+						},
+						{
+							value: 7,
+							label: '河西区'
+						}
+					]
+				}],
+				current: 0,
+				swiperCurrent: 0,
+				itemTabCurrent:0,
 				childrenTabCurrent:0,
-				timevalue:'',
-				mapShow:true,
-				timeShow:false,
+				regioValue:'北京市-东城区',
+				timeValue:'',
 				timeParams: {
 					year: true,
 					month: true,
@@ -112,6 +178,9 @@
 					second: false,
 					timestamp: true,
 				},
+				mapShow:true,
+				timeShow:false,
+				regioShow:false
 			};
 		},
 		methods: {
@@ -137,15 +206,17 @@
 				this.childrenTabCurrent=index
 			},
 			timeConfirm(e){
-				console.log()
-				this.timevalue=this.$u.timeFormat(e.timestamp, 'yyyy-mm-dd hh:MM')
+				this.timeValue=this.$u.timeFormat(e.timestamp, 'yyyy-mm-dd hh:MM')
 			},
 			timeCancel(e){
 				console.log(e)
-			}
+			},
+			regioConfirm(e){
+				console.log(e)
+			},
 		},
 		mounted(){
-			this.timevalue=this.$u.timeFormat(new Date().getTime(), 'yyyy-mm-dd hh:MM')
+			this.timeValue=this.$u.timeFormat(new Date().getTime(), 'yyyy-mm-dd hh:MM')
 		}
 	}
 </script>
