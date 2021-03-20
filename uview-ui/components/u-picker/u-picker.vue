@@ -248,7 +248,11 @@ export default {
 		confirmText: {
 			type: String,
 			default: '确认'
-		}
+		},
+		minuteInterval: {
+			type: Number,
+			default: 1
+		},
 	},
 	data() {
 		return {
@@ -354,6 +358,13 @@ export default {
 			// 生成数组，获取其中的索引，并剪出来
 			return [...Array(end + 1).keys()].slice(start);
 		},
+		customMinutes: function(number) {
+		  let newArr = []
+		  for (let i = 0; i < 60; i += number) {
+			newArr.push(i)
+		  }
+		  return newArr
+		},
 		getIndex: function(arr, val) {
 			let index = arr.indexOf(val);
 			// 如果index为-1(即找不到index值)，~(-1)=-(-1)-1=0，导致条件不成立
@@ -456,7 +467,7 @@ export default {
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.hours, this.hour));
 		},
 		setMinutes() {
-			this.minutes = this.generateArray(0, 59);
+			this.minutes = this.customMinutes(this.minuteInterval);
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.minutes, this.minute));
 		},
 		setSeconds() {

@@ -7,17 +7,16 @@
 			"path": "pages/index/index",
 			"style": {}
 		},{
-            "path" : "pages/groundObservation/weatherSituation/index",
-            "style" :  {"backgroundColor": "#F8F8F8"}
+            "path" : "pages/groundObservation/weatherSituation/weatherSituation",
+            "style" :  {}
+        },{
+            "path" : "pages/ruituProducts/RMAPS-NOW/RMAPS-NOW",
+            "style" :  {}
+        },{
+            "path" : "pages/highObservation/radarEcho/radarEcho",
+            "style" :  {} 
         }
-		// ,
-		// {
-		// 	"path": "pages/center/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "uView-center"
-		// 	}
-		// }
-	],
+    ],
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",
@@ -25,22 +24,4 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}
-	// ,
-	// "tabBar": {
-	//     "color": "#909399",
-	//     "selectedColor": "#303133",
-	//     "borderStyle": "black",
-	//     "backgroundColor": "#ffffff",
-	//     "list": [{
-	//         "pagePath": "pages/index/index",
-	//         "iconPath": "static/index.png",
-	//         "selectedIconPath": "static/index-selected.png",
-	//         "text": "首页"
-	//     }, {
-	//         "pagePath": "pages/center/index",
-	//         "iconPath": "static/center.png",
-	//         "selectedIconPath": "static/center-selected.png",
-	//         "text": "我"
-	//     }]
-	// }
 }
