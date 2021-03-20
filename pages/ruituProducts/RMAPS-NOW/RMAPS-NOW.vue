@@ -47,7 +47,7 @@
 			<p class='u-text-center u-type-info-dark u-padding-top-28'>组合反射率因子和0.15km风场</p>
 			<view>
 				<view v-if='imageInfo !== ""'>  
-				    <view-img :baseInfo="imageInfo"></view-img>  
+				    <view-img v-if='popupShow' :baseInfo="imageInfo"></view-img>  
 				</view>  
 			</view>
 			<view class="popup-tool-time">

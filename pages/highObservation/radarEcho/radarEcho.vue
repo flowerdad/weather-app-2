@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<u-navbar back-text="返回" title='RMAPS-NOW' :isBack="true" :background="background" title-color="#ffffff" back-icon-color='#ffffff' :back-text-style="{color:'#ffffff'}" :border-bottom='false'></u-navbar>
+		<u-navbar back-text="返回" title='雷达回波' :isBack="true" :background="background" title-color="#ffffff" back-icon-color='#ffffff' :back-text-style="{color:'#ffffff'}" :border-bottom='false'></u-navbar>
 		<u-tabs :list="list" :gutter='20' :show-bar='false' :current="listCurrent" @change="listChange"></u-tabs>
 		<view class="page-box">
 			<u-row gutter="40" align='top'>
@@ -17,7 +17,7 @@
 		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="80%" :closeable='true'>
 			<view>
 				<view v-if='imageInfo !== ""'>  
-				    <view-img :baseInfo="imageInfo"></view-img>  
+				    <view-img v-if="popupShow" :baseInfo="imageInfo"></view-img>  
 				</view>  
 			</view>
 			<view class="u-padding-12 popup-tools">
