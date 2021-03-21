@@ -11,13 +11,13 @@
 					<scroll-view scroll-y style="height: 100%;width: 100%;">
 						<view class="page-box">
 							<view class="order" v-for="(item,index) in analysisList" :key='index'>
-								<u-tag :text="item.label" mode="dark" shape="circleRight" :style="{'background-color': item.color}"/>
+								<u-tag :text="item.name" mode="dark" shape="circleRight" :style="{'background-color': item.color}"/>
 								<u-row gutter="40" class="u-margin-top-30" align='top'>
-									<u-col span="4" v-for="(children,index) in item.children" :key='index' @click='popup'>
+									<u-col span="4" v-for="(children,index) in item.children" :key='index' @click='popup(children)'>
 										<view class="u-padding-12 u-border shadow-box">
 											<u-image width='100%' height='150rpx' :src="children.img"></u-image>
 										</view>
-										<view class='u-font-12 u-type-info-dark u-margin-top-12'>{{children.label}}</view>
+										<view class='u-font-12 u-type-info-dark u-margin-top-12'>{{children.name}}</view>
 									</u-col>
 								</u-row>
 							</view>
@@ -28,13 +28,13 @@
 					<scroll-view scroll-y style="height: 100%;width: 100%;">
 						<view class="page-box">
 							<view class="order" v-for="(item,index) in predictionList" :key='index'>
-								<u-tag :text="item.label" mode="dark" shape="circleRight" :style="{'background-color': item.color}"/>
+								<u-tag :text="item.name" mode="dark" shape="circleRight" :style="{'background-color': item.color}"/>
 								<u-row gutter="40" class="u-margin-top-30" align='top'>
-									<u-col span="4" v-for="(children,index) in item.children" :key='index' @change='popup'>
+									<u-col span="4" v-for="(children,index) in item.children" :key='index' @click='popup(children)'>
 										<view class="u-padding-12 u-border shadow-box">
 											<u-image width='100%' height='150rpx' :src="children.img"></u-image>
 										</view>
-										<view class='u-font-12 u-type-info-dark u-margin-top-12'>{{children.label}}</view>
+										<view class='u-font-12 u-type-info-dark u-margin-top-12'>{{children.name}}</view>
 									</u-col>
 								</u-row>
 							</view>
@@ -43,22 +43,14 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="65%" :closeable='true'>
-			<p class='u-text-center u-type-info-dark u-padding-top-28'>组合反射率因子和0.15km风场</p>
+		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="63%" :closeable='true'>
 			<view>
-				<view-img v-if='popupShow' :src="imgSrc"></view-img>  
+				<view-img v-if='popupShow' :src="imgSrc"></view-img>   
 			</view>
-			<view class="popup-tool-time">
-				<u-row gutter="12">
-					<u-col span="2">
-						<view class="u-text-center">
-							<u-icon name="play-circle" size='50' color="#c0c4cc"></u-icon>
-						</view>
-					</u-col>
-					<u-col span="10">
-						<u-tabs :list="subsectionList" :gutter='20' :show-bar='false' :current="subsectionListCurrent" @change="subsectionListChange"></u-tabs>
-					</u-col>
-				</u-row>
+			<view class="u-padding-12 popup-tools">
+				<p class='u-text-center u-type-info-dark u-padding-20'>{{popupTitle}}</p>
+				<u-line color="#dadada" class="u-margin-bottom-20"/>
+				<times @value='timesValue' :popupMini='true'></times>
 			</view>
 		</u-popup>
 	</view>
@@ -66,52 +58,15 @@
 
 <script>
 	import viewImg from "../../../components/viewImg/viewImg.vue"; 
-	// import uni from "common/js/uni.js"; 
+	import times from "components/times/times.vue";
 	export default {
 		components: {  
-		     viewImg  
+		     viewImg,
+			 times
 		},
 		data() {
 			return {
 				imgSrc:'/static/data.png',
-				subsectionListCurrent:0,
-				subsectionList:[
-					{
-						name: '20:10'
-					}, {
-						name: '20:20'
-					}, {
-						name: '20:30'
-					}, {
-						name: '20:40'
-					}, {
-						name: '20:50'
-					}, {
-						name: '20:20'
-					}, {
-						name: '20:30'
-					}, {
-						name: '20:40'
-					}, {
-						name: '20:50'
-					}, {
-						name: '20:20'
-					}, {
-						name: '20:30'
-					}, {
-						name: '20:40'
-					}, {
-						name: '20:50'
-					}, {
-						name: '20:20'
-					}, {
-						name: '20:30'
-					}, {
-						name: '20:40'
-					}, {
-						name: '20:50'
-					}
-				],
 				background:{
 					backgroundColor: '#a0cfff'
 				},
@@ -124,95 +79,95 @@
 				],
 				analysisList:[
 					{
-						label:'降水场',
+						name:'降水场',
 						color:'rgb(132,190,254)',
 						children:[
 							{
 								value:0,
-								label:'组合反射率因子和0.15km风场',
+								name:'组合反射率因子和0.15km风场',
 								img:'/static/data.png',
 							}
 						]
 					},
 					{
-						label:'温度场',
+						name:'温度场',
 						color:'rgb(240,199,81)',
 						children:[
 							{
 								value:0,
-								label:'0.15km扰动温度和风场',
+								name:'0.15km扰动温度和风场',
 								img:'/static/data.png',
 							}
 						]
 					},
 					{
-						label:'比湿场',
+						name:'比湿场',
 						color:'rgb(0,223,189)',
 						children:[
 							{
 								value:0,
-								label:'0.15km比湿和风场',
+								name:'0.15km比湿和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0.15km相对湿度和风场',
+								name:'0.15km相对湿度和风场',
 								img:'/static/data.png',
 							}
 						]
 					},
 					{
-						label:'风场',
+						name:'风场',
 						color:'rgb(135,225,130)',
 						children:[
 							{
 								value:0,
-								label:'0.15km全风速和风场',
+								name:'0.15km全风速和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'1.95km全风速和风场',
+								name:'1.95km全风速和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'4.05km全风速和风场',
+								name:'4.05km全风速和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'1.95km垂直速度和0.15km风场',
+								name:'1.95km垂直速度和0.15km风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0.15km辐合辐散场和风场',
+								name:'0.15km辐合辐散场和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0.15km对流有效位能和风场',
+								name:'0.15km对流有效位能和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0.15km对流抑制能量和风场',
+								name:'0.15km对流抑制能量和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0-3.15km垂直切变',
+								name:'0-3.15km垂直切变',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0-6.15km垂直切变',
+								name:'0-6.15km垂直切变',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0-6.15km垂直速度累积和0.15km风场',
+								name:'0-6.15km垂直速度累积和0.15km风场',
 								img:'/static/data.png',
 							}
 						]
@@ -220,85 +175,85 @@
 				],
 				predictionList:[
 					{
-						label:'降水场',
+						name:'降水场',
 						color:'rgb(132,190,254)',
 						children:[
 							{
 								value:0,
-								label:'组合反射率因子_数值预报和0.15km风场',
+								name:'组合反射率因子_数值预报和0.15km风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'组合反射率因子_分析外推和0.15km风场',
+								name:'组合反射率因子_分析外推和0.15km风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'累积降水量和0.15km风场',
+								name:'累积降水量和0.15km风场',
 								img:'/static/data.png',
 							}
 						]
 					},
 					{
-						label:'温度场',
+						name:'温度场',
 						color:'rgb(240,199,81)',
 						children:[
 							{
 								value:0,
-								label:'0.15km扰动温度和风场',
+								name:'0.15km扰动温度和风场',
 								img:'/static/data.png',
 							}
 						]
 					},
 					{
-						label:'比湿场',
+						name:'比湿场',
 						color:'rgb(0,223,189)',
 						children:[
 							{
 								value:0,
-								label:'0.15km比湿和风场',
+								name:'0.15km比湿和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0.15km相对湿度和风场',
+								name:'0.15km相对湿度和风场',
 								img:'/static/data.png',
 							}
 						]
 					},
 					{
-						label:'风场',
+						name:'风场',
 						color:'rgb(135,225,130)',
 						children:[
 							{
 								value:0,
-								label:'0.15km全风速和风场',
+								name:'0.15km全风速和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'1.95km全风速和风场',
+								name:'1.95km全风速和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'4.05km全风速和风场',
+								name:'4.05km全风速和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'1.95km垂直速度和0.15km风场',
+								name:'1.95km垂直速度和0.15km风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0.15km辐合辐散场和风场',
+								name:'0.15km辐合辐散场和风场',
 								img:'/static/data.png',
 							},
 							{
 								value:0,
-								label:'0-6.15km垂直速度累积和0.15km风场',
+								name:'0-6.15km垂直速度累积和0.15km风场',
 								img:'/static/data.png'
 							}
 						]
@@ -306,7 +261,8 @@
 				],
 				current: 0,
 				swiperCurrent: 0,
-				popupShow:false
+				popupShow:false,
+				popupTitle:'',
 			};
 		},
 		methods: {
@@ -327,12 +283,12 @@
 				this.swiperCurrent = current;
 				this.current = current;
 			},
-			popup(){
-				// uni.previewImage({
-				// 	current: 0,
-				// 	urls: [this.imgSrc]
-				// })
+			popup(item){
 				this.popupShow=true;
+				this.popupTitle = item.name;
+			},
+			timesValue(e){
+				console.log(e.id+'-'+e.name)
 			}
 		}
 	}
@@ -361,9 +317,12 @@
 .shadow-box{
 	box-shadow: 1px 1px 5px #F8F8F8;
 }
-.popup-tool-time{
-	width: 100%;
+.popup-tools{
+	background-color: #f8f8f8;
+	border-radius: 12px;
+	margin: 20rpx;
 	position:absolute;
 	bottom:0px;
+	width: calc(100% - 40rpx);
 }
 </style>
