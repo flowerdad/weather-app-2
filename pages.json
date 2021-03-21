@@ -1,50 +1,53 @@
 {
-	"easycom": {
-		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index"
-		},{
-            "path" : "pages/groundObservation/weatherSituation/weatherSituation"
-        },{
-            "path" : "pages/ruituProducts/RMAPS-NOW/RMAPS-NOW"
-        },{
-            "path" : "pages/highObservation/radarEcho/radarEcho"
-        }
-        ,{
-            "path" : "pages/highObservation/lightning/lightning"
-        }
-        ,{
-            "path" : "pages/highObservation/sounding/sounding"
-        }
-        ,{
-            "path" : "pages/highObservation/cloudChart/cloudChart"
-        }
-        ,{
-            "path" : "pages/highObservation/cloudRadar/cloudRadar"
-        }
-        ,{
-            "path" : "pages/highObservation/fengkuoxian/fengkuoxian"
-        }
-        ,{
-            "path" : "pages/ruituProducts/RMAPS-IN/RMAPS-IN"
-        }
-        ,{
-            "path" : "pages/ruituProducts/RMAPS-ST-3H/RMAPS-ST-3H"
-        }
-        ,{
-            "path" : "pages/globalValue/EC_thin/EC_thin"
-        }
-        ,{
-            "path" : "pages/globalValue/Grapes/Grapes"
+    "easycom": {
+        "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+    },
+    "pages": [
+        {
+            "path": "pages/index/index"
+        },
+        {
+            "path": "pages/groundObservation/weatherSituation/weatherSituation"
+        },
+        {
+            "path": "pages/ruituProducts/RMAPS-NOW/RMAPS-NOW"
+        },
+        {
+            "path": "pages/highObservation/radarEcho/radarEcho"
+        },
+        {
+            "path": "pages/highObservation/lightning/lightning"
+        },
+        {
+            "path": "pages/highObservation/sounding/sounding"
+        },
+        {
+            "path": "pages/highObservation/cloudChart/cloudChart"
+        },
+        {
+            "path": "pages/highObservation/cloudRadar/cloudRadar"
+        },
+        {
+            "path": "pages/highObservation/fengkuoxian/fengkuoxian"
+        },
+        {
+            "path": "pages/ruituProducts/RMAPS-IN/RMAPS-IN"
+        },
+        {
+            "path": "pages/ruituProducts/RMAPS-ST-3H/RMAPS-ST-3H"
+        },
+        {
+            "path": "pages/globalValue/EC_thin/EC_thin"
+        },
+        {
+            "path": "pages/globalValue/Grapes/Grapes"
         }
     ],
-	"globalStyle": {
-		"navigationStyle": "custom",
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uView",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+    "globalStyle": {
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "uView",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    }
 }
