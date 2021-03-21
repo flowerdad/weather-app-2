@@ -1,123 +1,126 @@
 <template>
-	<view class="map-box">
-	  <view id="lmap" class="map"></view>
-	  <view class="content">
-		<u-sticky offset-top="230">
-			<view class="sticky">
-				<u-card class='main-info' :border="false" :head-border-bottom="false" margin="20rpx" :show-head='false' style=''>
-					<view class="" slot="body">
-						<view class="" style="font-size: 38rpx;color:#d8d8d8"><u-icon name="map-fill" class='u-margin-right-16'></u-icon> 北京市 东城区</view>
-						<view style="position: absolute;right: 30rpx;top: 30rpx; color:#909090">03:25 更新  <u-icon name="reload" class='u-margin-left-12'></u-icon></view>
-						<u-row gutter="16" class='u-margin-top-30'>
-							<u-col span="3">
-								<view class="demo-layout bg-purple" style="font-size:90rpx;font-weight: bold;color:#d8d8d8">10°</view>
-							</u-col>
-							<u-col span="9">
-								<view class="demo-layout bg-purple-light" style="color:#d8d8d8">晴</view>
-								<view class="demo-layout bg-purple-light" style="color:#d8d8d8">AQI 良 西风3级</view>
-							</u-col>
-						</u-row>
-					</view>
-				</u-card>
-			</view>
-		</u-sticky>
-		<view class="u-padding-30">今天白天晴，夜晚晴，现在10°，东南风，空气重度污染。</view>
-	    <u-card :border="false" :head-border-bottom="false" margin="0rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
-	      <view slot="head" @click='highObservationExtend'>
-	        <text class="card-head-text">高空观测</text>
-	        <u-icon :name="isHighObservationExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
-	      </view>
-	      <view class="u-type-primary-bg" slot="body" ref='cardbg'>
-	        <u-grid :col="4" :border='false' hover-class="hover-class" style='background-color: #fff;'>
-	          <template v-for="(item,index) in highObservation">
-	            <u-grid-item :key="index" v-if='index < isHighObservationExtend'>
-	              <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
-	                <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
-	                <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
-	              </navigator>
-	            </u-grid-item>
-	          </template>
-	        </u-grid>
-	      </view>
-	    </u-card>
-	    <u-card title="地面观测" :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
-	      <view slot="head" @click='groundObservationExtend'>
-	        <text class="card-head-text">地面观测</text>
-	        <u-icon :name="isGroundObservationExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
-	      </view>
-	      <view class="u-type-primary-bg" slot="body">
-	        <u-grid :col="4" :border='false' hover-class="hover-class" style='background-color: #fff;'>
-	          <template v-for="(item,index) in groundObservation">
-	            <u-grid-item :key="index" v-if='index < isGroundObservationExtend'>
-	              <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
-	                <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
-	                <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
-	              </navigator>
-	            </u-grid-item>
-	          </template>
-	        </u-grid>
-	      </view>
-	    </u-card>
-	    <u-card title="睿图产品" title-color='#888' :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
-	      <view class="u-type-primary-bg" slot="body">
-	        <u-grid :col="3" :border='false' hover-class="hover-class">
-	          <u-grid-item v-for="(item,index) in ruituProducts" :key="index">
-	            <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
-	              <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
-	              <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
-	            </navigator>
-	          </u-grid-item>
-	        </u-grid>
-	      </view>
-	    </u-card>
-	    <u-card title="" :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
-	      <view slot="head" @click='forecastProductsExtend'>
-	        <text class="card-head-text">预报产品</text>
-	        <u-icon :name="isForecastProductsExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
-	      </view>
-	      <view class="u-type-primary-bg" slot="body">
-	        <u-cell-group :border="false">
-	          <template v-for="(item,index) in forecastProducts">
-	            <view :key="index" v-if='index < isForecastProductsExtend' @click="pdf">
-	              <u-cell-item :border-bottom='index==forecastProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class">
-	                <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
-	              </u-cell-item>
-	            </view>
-	          </template>
-	        </u-cell-group>
-	      </view>
-	    </u-card>
-	    <u-card title="" :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
-	      <view slot="head" @click='serviceProductsExtend'>
-	        <text class="card-head-text">服务产品</text>
-	        <u-icon :name="isServiceProductsExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
-	      </view>
-	      <view class="u-type-primary-bg" slot="body">
-	        <u-cell-group :border="false">
-	          <template v-for="(item,index) in serviceProducts">
-	            <view :key="index" v-if='index < isServiceProductsExtend' @click="pdf">
-	              <u-cell-item :border-bottom='index==serviceProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class">
-	                <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
-	              </u-cell-item>
-	            </view>
-	          </template>
-	        </u-cell-group>
-	      </view>
-	    </u-card>
-	    <u-card title="全球数值" title-color='#888' :border="false" :head-border-bottom="false" :body-style="{'padding-top':'0px'}">
-	      <view class="u-type-primary-bg" slot="body">
-	        <u-grid :col="2" :border='false' hover-class="hover-class">
-	          <u-grid-item v-for="(item,index) in globalValue" :key="index">
-	            <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
-	              <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
-	              <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
-	            </navigator>
-	          </u-grid-item>
-	        </u-grid>
-	      </view>
-	    </u-card>
-	  </view>
-	</view>
+  <view class="map-box">
+    <view id="lmap" class="map"></view>
+    <view class="content">
+      <u-sticky offset-top="230">
+        <view class="sticky">
+          <u-card class='main-info' :border="false" :head-border-bottom="false" margin="20rpx" :show-head='false' style=''>
+            <view class="" slot="body">
+              <view class="" style="font-size: 38rpx;color:#d8d8d8">
+                <u-icon name="map-fill" class='u-margin-right-16'></u-icon> 北京市 东城区
+              </view>
+              <view style="position: absolute;right: 30rpx;top: 30rpx; color:#909090">03:25 更新 <u-icon name="reload" class='u-margin-left-12'></u-icon>
+              </view>
+              <u-row gutter="16" class='u-margin-top-30'>
+                <u-col span="3">
+                  <view class="demo-layout bg-purple" style="font-size:90rpx;font-weight: bold;color:#d8d8d8">10°</view>
+                </u-col>
+                <u-col span="9">
+                  <view class="demo-layout bg-purple-light" style="color:#d8d8d8">晴</view>
+                  <view class="demo-layout bg-purple-light" style="color:#d8d8d8">AQI 良 西风3级</view>
+                </u-col>
+              </u-row>
+            </view>
+          </u-card>
+        </view>
+      </u-sticky>
+      <view class="u-padding-30">今天白天晴，夜晚晴，现在10°，东南风，空气重度污染。</view>
+      <u-card :border="false" :head-border-bottom="false" margin="0rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
+        <view slot="head" @click='highObservationExtend'>
+          <text class="card-head-text">高空观测</text>
+          <u-icon :name="isHighObservationExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
+        </view>
+        <view class="u-type-primary-bg" slot="body" ref='cardbg'>
+          <u-grid :col="4" :border='false' hover-class="hover-class" style='background-color: #fff;'>
+            <template v-for="(item,index) in highObservation">
+              <u-grid-item :key="index" v-if='index < isHighObservationExtend'>
+                <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
+                  <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
+                  <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
+                </navigator>
+              </u-grid-item>
+            </template>
+          </u-grid>
+        </view>
+      </u-card>
+      <u-card title="地面观测" :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
+        <view slot="head" @click='groundObservationExtend'>
+          <text class="card-head-text">地面观测</text>
+          <u-icon :name="isGroundObservationExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-grid :col="4" :border='false' hover-class="hover-class" style='background-color: #fff;'>
+            <template v-for="(item,index) in groundObservation">
+              <u-grid-item :key="index" v-if='index < isGroundObservationExtend'>
+                <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
+                  <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
+                  <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
+                </navigator>
+              </u-grid-item>
+            </template>
+          </u-grid>
+        </view>
+      </u-card>
+      <u-card title="睿图产品" title-color='#888' :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
+        <view class="u-type-primary-bg" slot="body">
+          <u-grid :col="3" :border='false' hover-class="hover-class">
+            <u-grid-item v-for="(item,index) in ruituProducts" :key="index">
+              <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
+                <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
+                <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
+              </navigator>
+            </u-grid-item>
+          </u-grid>
+        </view>
+      </u-card>
+      <u-card title="" :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
+        <view slot="head" @click='forecastProductsExtend'>
+          <text class="card-head-text">预报产品</text>
+          <u-icon :name="isForecastProductsExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-cell-group :border="false">
+            <template v-for="(item,index) in forecastProducts">
+              <view :key="index" v-if='index < isForecastProductsExtend' @click="pdf">
+                <u-cell-item :border-bottom='index==forecastProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class">
+                  <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
+                </u-cell-item>
+              </view>
+            </template>
+          </u-cell-group>
+        </view>
+      </u-card>
+      <u-card title="" :border="false" :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
+        <view slot="head" @click='serviceProductsExtend'>
+          <text class="card-head-text">服务产品</text>
+          <u-icon :name="isServiceProductsExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-cell-group :border="false">
+            <template v-for="(item,index) in serviceProducts">
+              <view :key="index" v-if='index < isServiceProductsExtend' @click="pdf">
+                <u-cell-item :border-bottom='index==serviceProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class">
+                  <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
+                </u-cell-item>
+              </view>
+            </template>
+          </u-cell-group>
+        </view>
+      </u-card>
+      <u-card title="全球数值" title-color='#888' :border="false" :head-border-bottom="false" :body-style="{'padding-top':'0px'}">
+        <view class="u-type-primary-bg" slot="body">
+          <u-grid :col="2" :border='false' hover-class="hover-class">
+            <u-grid-item v-for="(item,index) in globalValue" :key="index">
+              <navigator class="u-text-center" hover-class="none" :url="item.url" navigateTo>
+                <u-icon :name="item.icon" :color='item.color' custom-prefix="custom-icon" :size="40"></u-icon>
+                <view class="grid-text u-margin-top-12 u-font-12">{{item.name}}</view>
+              </navigator>
+            </u-grid-item>
+          </u-grid>
+        </view>
+      </u-card>
+    </view>
+  </view>
 </template>
 
 <script module="leafletMap" lang="renderjs">
@@ -378,29 +381,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.map-box{
-	position: relative;
+.map-box {
+  position: relative;
 }
-.map{
-	width:100%;
-	height: 90vh;
-	position:fixed;
-	top:0px;
-	z-index:10;
+.map {
+  width: 100%;
+  height: 90vh;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
 }
 .content {
   background-color: #f8f8f8;
-  position:absolute;
-  top:85vh;
+  position: absolute;
+  top: 85vh;
   z-index: 20;
-  width:100%;
+  width: 100%;
   padding-top: 140rpx;
 }
-.main-info{
-	position: absolute;
-	top: -150rpx;
-	width:calc(100vw - 40rpx);
-	background: linear-gradient(to right, #1e1f21 , #363d4b);
+.main-info {
+  position: absolute;
+  top: -150rpx;
+  width: calc(100vw - 40rpx);
+  background: linear-gradient(to right, #1e1f21, #363d4b);
 }
 .card-head-icon {
   float: right;
