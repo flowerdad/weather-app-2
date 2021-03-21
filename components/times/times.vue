@@ -7,7 +7,7 @@
 				</view>
 			</u-col>
 			<u-col span="8">
-				<u-tabs v-if="list.length != 0" :list="list" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="current" @change="current=index"></u-tabs>
+				<u-tabs v-if="list.length != 0" :list="list" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="current" @change="change"></u-tabs>
 				<view v-else class="u-light-color">无选项</view>
 			</u-col>
 			<u-col span="2" @click='show=true'>
@@ -106,6 +106,9 @@
 			}
 		},
         methods: {
+			change(index){
+				this.current=index;
+			},
 			tag(index){
 				this.current=index;
 				this.show=false;

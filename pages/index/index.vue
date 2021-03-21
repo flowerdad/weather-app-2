@@ -168,7 +168,7 @@
 						icon: 'in',
 						color: 'red',
 						name: 'RMAPS-IN',
-						url:'/pages/ruituProducts/RMAPS-NOW/RMAPS-NOW'
+						url:'/pages/ruituProducts/RMAPS-IN/RMAPS-IN'
 					}, {
 						icon: 'in',
 						color: 'orange',
@@ -178,7 +178,7 @@
 						icon: 'in',
 						color: 'yellow',
 						name: 'RMAPS-ST-3H',
-						url:'/pages/ruituProducts/RMAPS-NOW/RMAPS-NOW'
+						url:'/pages/ruituProducts/RMAPS-ST-3H/RMAPS-ST-3H'
 					}
 				],
 				

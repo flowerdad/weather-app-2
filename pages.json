@@ -27,6 +27,12 @@
         ,{
             "path" : "pages/highObservation/fengkuoxian/fengkuoxian"
         }
+        ,{
+            "path" : "pages/ruituProducts/RMAPS-IN/RMAPS-IN"
+        }
+        ,{
+            "path" : "pages/ruituProducts/RMAPS-ST-3H/RMAPS-ST-3H"
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",
