@@ -1,16 +1,6 @@
 <template>
 	<view class="content">
 		<u-navbar back-text="返回" title='雷达回波' :isBack="true" :background="background" title-color="#ffffff" back-icon-color='#ffffff' :back-text-style="{color:'#ffffff'}" :border-bottom='false'></u-navbar>
-		<!-- <u-row gutter="0" style='background-color: #fff;'>
-			<u-col span="10">
-				<u-tabs :list="list" :gutter='20' :show-bar='true' :current="listCurrent" @change="listChange"></u-tabs>
-			</u-col>
-			<u-col span="2" @click='popup'>
-				<view class="u-text-center" >
-					<u-icon name="grid" size='40' color="#55aaff"></u-icon>
-				</view>
-			</u-col>
-		</u-row> -->
 		<nav-selection :list='list' @value='listValue' key='list'></nav-selection>
 		<view class="page-box">
 			<u-row gutter="40" align='top'>
@@ -152,7 +142,6 @@
 				background:{
 					backgroundColor: '#a0cfff'
 				},
-				listCurrent:0,
 				list: [
 					{
 						name: '拼图',
@@ -695,25 +684,23 @@
 				type:[],
 				region:[],
 				elevation:[],
-				popupTitle:'12',
-				popupShow:false,
-				tabsStyle:{
-					'color': '#f1f1f1',
-					'background-color': '#6fb3ff',
-					'border-radius': '5px'
-				}
+				typeName:'拼图',
+				popupTitle:'',
+				popupShow:false
 			};
 		},
 		methods: {
-			listChange(index){
-				this.listCurrent=index;
-				this.products=this.list[index].products
-			},
 			popup(item){
 				this.region=item.region;
 				this.type=item.type;
 				this.elevation=item.elevation;
 				this.popupShow=true;
+				this.popupTitle = this.typeName+' - '+item.name;
+			},
+			listValue(e){
+				this.products=this.list[e.index].products
+				this.typeName=e.name;
+				this.popupTitle=e.name;
 			},
 			typeValue(e){
 				console.log(e.id+'-'+e.name)
@@ -722,10 +709,6 @@
 						this.elevation=item.elevation;
 					}
 				})
-			},
-			listValue(e){
-				this.listCurrent=e.index;
-				this.products=this.list[e.index].products
 			},
 			elevationValue(e){
 				console.log(e.id+'-'+e.name)
