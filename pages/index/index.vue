@@ -109,27 +109,27 @@
 						icon: 'tankong',
 						color: '#f37b1d',
 						name: '探空',
-						url:'/pages/highObservation/radarEcho/radarEcho'
+						url:'/pages/highObservation/sounding/sounding'
 					}, {
 						icon: 'shandian',
 						color: '#ff9900',
 						name: '闪电',
-						url:'/pages/highObservation/radarEcho/radarEcho'
+						url:'/pages/highObservation/lightning/lightning'
 					}, {
 						icon: 'yuntu',
 						color: '#8dc63f',
 						name: '云图',
-						url:'/pages/highObservation/radarEcho/radarEcho'
+						url:'/pages/highObservation/cloudChart/cloudChart'
 					}, {
 						icon: 'yuntu',
 						color: '#8dc63f',
 						name: '云雷达',
-						url:'/pages/highObservation/radarEcho/radarEcho'
+						url:'/pages/highObservation/cloudRadar/cloudRadar'
 					}, {
 						icon: 'yuntu',
 						color: '#8dc63f',
 						name: '风廓线',
-						url:'/pages/highObservation/radarEcho/radarEcho'
+						url:'/pages/highObservation/fengkuoxian/fengkuoxian'
 					}
 				],
 				

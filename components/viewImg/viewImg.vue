@@ -1,10 +1,8 @@
 <template>  
     <view class='viewImg'>  
-        <!-- :style="{height:screenH+'upx'}" -->  
-        <movable-area scale-area>  
-            <movable-view :style="{width:baseInfo.width+'upx',height:baseInfo.height+'upx'}" direction="all" @scale="onScale" :out-of-bounds='true'
-             @change="onChange" scale :scale-min="minScale" :scale-max="5" :scale-value="scale" >  
-                <image :src="baseInfo.path" :style="{width:baseInfo.width+'upx',height:baseInfo.height+'upx'}"></image>  
+        <movable-area scale-area :style="{width:width,height:height}">  
+            <movable-view direction="all" :out-of-bounds='false' scale :scale-min="0.1" :style="{width:imageInfo.width+'upx',height:imageInfo.height+'upx'}">  
+                <image :src="src" :style="{width:imageInfo.width+'upx',height:imageInfo.height+'upx'}"></image>  
             </movable-view>  
         </movable-area>  
     </view>  
@@ -12,63 +10,45 @@
 
 <script>  
     export default {  
-        props: {  
-            baseInfo: {  
-                type: Object,  
-                default: function(e) {  
-                    return {}  
-                }  
-            }  
-        },  
+        props: { 
+			src:String,
+			width: {  
+                type: String,  
+                default: '90vw'
+            }, 
+			height: {
+			    type: String,  
+			    default: '50vh'
+			},
+        },
         data() {  
             return {  
-                minScale: 0.1,  
+				imageInfo:'',
+				viewInfo:'', 
                 x: 0,  
-                y: 0,  
-                scale: 1,// 定义缩放倍数  
-                old: {  
-                    x: 0,  
-                    y: 0,  
-                    scale: 2  
-                },  
-
+                y: 0
             }  
         },  
         methods: {  
 			getImgInfo(){
 				uni.getImageInfo({
-					src: '/static/data.png',  
+					src: this.src,  
 					success: (image)=> {
 						this.imageInfo=image
-						this.popupShow=true;
+						this.getViewInfo();
 					}
 				});
 			},
-			getElInfo() {
+			getViewInfo() {
 				this.$u.getRect('.viewImg').then(res => {
-					console.log(res);
-					console.log(this.baseInfo)
+					this.viewInfo=res;
+					this.x = this.viewInfo.width-this.imageInfo.width
 				})
-			},
-            onChange: function(e) {  
-				// console.log(e)  
-				this.old.x = e.detail.x  
-				this.old.y = e.detail.y  
-			},  
-			onScale: function(e) {  
-				// console.log(e)  
-				this.old.scale = e.detail.scale;  
-				this.x = this.old.x  
-				this.y = this.old.y  
-				this.$nextTick(function() {  
-					this.x = 0  
-					this.y = 0  
-				})  
-			}, 
+			}
         },
 		mounted(){
 			this.$nextTick(()=>{
-				this.getElInfo();
+				this.getImgInfo();
 			})
 		}
     }  
@@ -78,18 +58,11 @@
     movable-view {  
         display: flex;  
         align-items: center;  
-        justify-content: center;  
-        // top:140upx;  
-        // width:100vw;  
-        // height:100vh;  
-        // background-color: #007AFF;  
-        color: #fff;  
+        justify-content: center;
     }  
 
-    movable-area {  
-        height: 50vh;  
-        width: 90vw;  
+    movable-area {
+		overflow: hidden;
         background-color: #fff;  
-        overflow: hidden;  
     }  
 </style>  

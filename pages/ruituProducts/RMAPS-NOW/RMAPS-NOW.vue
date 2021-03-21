@@ -43,12 +43,10 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="60%" :closeable='true'>
+		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="65%" :closeable='true'>
 			<p class='u-text-center u-type-info-dark u-padding-top-28'>组合反射率因子和0.15km风场</p>
 			<view>
-				<view v-if='imageInfo !== ""'>  
-				    <view-img v-if='popupShow' :baseInfo="imageInfo"></view-img>  
-				</view>  
+				<view-img v-if='popupShow' :src="imgSrc"></view-img>  
 			</view>
 			<view class="popup-tool-time">
 				<u-row gutter="12">
@@ -75,7 +73,7 @@
 		},
 		data() {
 			return {
-				imageInfo:'',
+				imgSrc:'/static/data.png',
 				subsectionListCurrent:0,
 				subsectionList:[
 					{
@@ -330,13 +328,11 @@
 				this.current = current;
 			},
 			popup(){
-				uni.getImageInfo({  
-					src: '/static/data.png',  
-					success: (image)=> {
-						this.imageInfo=image
-						this.popupShow=true;
-					}
-				});
+				// uni.previewImage({
+				// 	current: 0,
+				// 	urls: [this.imgSrc]
+				// })
+				this.popupShow=true;
 			}
 		}
 	}

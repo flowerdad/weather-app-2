@@ -14,80 +14,34 @@
 				</u-col>
 			</u-row>
 		</view>
-		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="80%" :closeable='true'>
+		<u-popup v-model="popupShow" mode="center" border-radius="14" width="90%" height="81%" :closeable='true'>
 			<view>
-				<view v-if='imageInfo !== ""'>  
-				    <view-img v-if="popupShow" :baseInfo="imageInfo"></view-img>  
-				</view>  
+				<view-img v-if='popupShow' :src="imgSrc"></view-img>   
 			</view>
 			<view class="u-padding-12 popup-tools">
 				<p class='u-text-center u-type-info-dark u-padding-20'>{{popupTitle}}</p>
 				<u-line color="#dadada" class="u-margin-top-10 u-margin-bottom-20"/>
-				<view class="popup-tool-time">
-					<u-row gutter="12">
-						<u-col span="2">
-							<view class="u-text-center">
-								<u-icon name="grid" size='40' color="#c0c4cc"></u-icon>
-							</view>
-						</u-col>
-						<u-col span="10">
-							<u-tabs v-if="type.length != 0" :list="type" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="typeCurrent" @change="typeChange"></u-tabs>
-							<view v-else class="u-light-color">无选项</view>
-						</u-col>
-					</u-row>
-				</view>
+				<type-selection :list='type' @value='typeValue' :popupMini='true' key='type'></type-selection>
 				<u-line color="#dadada" class="u-margin-top-20 u-margin-bottom-20"/>
-				<view class="popup-tool-time">
-					<u-row gutter="12">
-						<u-col span="2">
-							<view class="u-text-center">
-								<u-icon name="checkbox-mark" size='40' color="#c0c4cc"></u-icon>
-							</view>
-						</u-col>
-						<u-col span="10">
-							<u-tabs v-if="elevation.length != 0" :list="elevation" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="elevationCurrent" @change="elevationChange"></u-tabs>
-							<view v-else class="u-light-color">无选项</view>
-						</u-col>
-					</u-row>
-				</view>
+				<type-selection :list='elevation' @value='elevationValue' :popupMini='true' key='elevation'></type-selection>
 				<u-line color="#dadada" class="u-margin-top-20 u-margin-bottom-20"/>
-				<view class="popup-tool-time">
-					<u-row gutter="12">
-						<u-col span="2">
-							<view class="u-text-center">
-								<u-icon name="map" size='40' color="#c0c4cc"></u-icon>
-							</view>
-						</u-col>
-						<u-col span="10">
-							<u-tabs v-if="region.length != 0" :list="region" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="regionCurrent" @change="regionChange"></u-tabs>
-							<view v-else class="u-light-color">无选项</view>
-						</u-col>
-					</u-row>
-				</view>
+				<type-selection :list='region' @value='regionValue' :popupMini='true' key='region'></type-selection>
 				<u-line color="#dadada" class="u-margin-top-20 u-margin-bottom-20"/>
-				<view class="popup-tool-time">
-					<u-row gutter="12">
-						<u-col span="2">
-							<view class="u-text-center">
-								<u-icon name="play-circle-fill" size='40' color="#f17675"></u-icon>
-							</view>
-						</u-col>
-						<u-col span="10">
-							<u-tabs v-if="timeList.length != 0" :list="timeList" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="timeCurrent" @change="timeChange"></u-tabs>
-							<view v-else class="u-light-color">无选项</view>
-						</u-col>
-					</u-row>
-				</view>
+				<times @value='timesValue' :popupMini='true'></times>
 			</view>
 		</u-popup>
 	</view>
 </template>
 
 <script>
-	import viewImg from "../../../components/viewImg/viewImg.vue"; 
+	import viewImg from "components/viewImg/viewImg.vue"; 
+	import times from "components/times/times.vue";
+	import typeSelection from "components/typeSelection/typeSelection.vue"; 
 	export default {
 		components: {  
-		     viewImg  
+		    viewImg ,
+			times,
+			typeSelection
 		},
 		data() {
 			let region_huabei={id:'',name:'华北'}
@@ -182,7 +136,7 @@
 				}
 			]
 			return {
-				imageInfo:'',
+				imgSrc:'/static/data.png',
 				background:{
 					backgroundColor: '#a0cfff'
 				},
@@ -688,7 +642,6 @@
 						]
 					}
 				],
-				timeCurrent:0,
 				timeList:[
 					{
 						name: '20:10'
@@ -726,15 +679,11 @@
 						name: '20:50'
 					}
 				],
-				productsCurrent:0,
 				products:[],
-				typeCurrent:0,
 				type:[],
-				regionCurrent:0,
 				region:[],
-				elevationCurrent:0,
 				elevation:[],
-				popupTitle:'',
+				popupTitle:'12',
 				popupShow:false,
 				tabsStyle:{
 					'color': '#f1f1f1',
@@ -748,35 +697,28 @@
 				this.listCurrent=index;
 				this.products=this.list[index].products
 			},
-			timeChange(index){
-				this.timeCurrent=index;
+			popup(item){
+				this.region=item.region;
+				this.type=item.type;
+				this.elevation=item.elevation;
+				this.popupShow=true;
 			},
-			typeChange(index){
-				this.typeCurrent=index
+			typeValue(e){
+				console.log(e.id+'-'+e.name)
 				this.type.forEach(item=>{
-					if(index==item.id){
+					if(e.id==item.id){
 						this.elevation=item.elevation;
 					}
 				})
 			},
-			elevationChange(index){
-				this.elevationCurrent=index
+			elevationValue(e){
+				console.log(e.id+'-'+e.name)
 			},
-			regionChange(index){
-				this.regionCurrent=index
+			regionValue(e){
+				console.log(e.id+'-'+e.name)
 			},
-			popup(item){
-				console.log(item.prototype)
-				this.region=item.region;
-				this.type=item.type;
-				this.elevation=item.elevation;
-				uni.getImageInfo({  
-					src: '/static/data.png',  
-					success: (image)=> {
-						this.imageInfo=image
-						this.popupShow=true;
-					}
-				});
+			timesValue(e){
+				console.log(e.id+'-'+e.name)
 			}
 		},
 		mounted(){

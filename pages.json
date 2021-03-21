@@ -4,17 +4,28 @@
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
-			"style": {}
+			"path": "pages/index/index"
 		},{
-            "path" : "pages/groundObservation/weatherSituation/weatherSituation",
-            "style" :  {}
+            "path" : "pages/groundObservation/weatherSituation/weatherSituation"
         },{
-            "path" : "pages/ruituProducts/RMAPS-NOW/RMAPS-NOW",
-            "style" :  {}
+            "path" : "pages/ruituProducts/RMAPS-NOW/RMAPS-NOW"
         },{
-            "path" : "pages/highObservation/radarEcho/radarEcho",
-            "style" :  {} 
+            "path" : "pages/highObservation/radarEcho/radarEcho"
+        }
+        ,{
+            "path" : "pages/highObservation/lightning/lightning"
+        }
+        ,{
+            "path" : "pages/highObservation/sounding/sounding"
+        }
+        ,{
+            "path" : "pages/highObservation/cloudChart/cloudChart"
+        }
+        ,{
+            "path" : "pages/highObservation/cloudRadar/cloudRadar"
+        }
+        ,{
+            "path" : "pages/highObservation/fengkuoxian/fengkuoxian"
         }
     ],
 	"globalStyle": {

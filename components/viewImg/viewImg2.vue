@@ -1,5 +1,5 @@
 <template>  
-    <view class='viewImg'>  
+    <view class="">  
         <!-- :style="{height:screenH+'upx'}" -->  
         <movable-area scale-area>  
             <movable-view :style="{width:baseInfo.width+'upx',height:baseInfo.height+'upx'}" direction="all" @scale="onScale" :out-of-bounds='true'
@@ -8,7 +8,7 @@
             </movable-view>  
         </movable-area>  
     </view>  
-</template>
+</template>  
 
 <script>  
     export default {  
@@ -35,21 +35,6 @@
             }  
         },  
         methods: {  
-			getImgInfo(){
-				uni.getImageInfo({
-					src: '/static/data.png',  
-					success: (image)=> {
-						this.imageInfo=image
-						this.popupShow=true;
-					}
-				});
-			},
-			getElInfo() {
-				this.$u.getRect('.viewImg').then(res => {
-					console.log(res);
-					console.log(this.baseInfo)
-				})
-			},
             onChange: function(e) {  
 				// console.log(e)  
 				this.old.x = e.detail.x  
@@ -65,12 +50,7 @@
 					this.y = 0  
 				})  
 			}, 
-        },
-		mounted(){
-			this.$nextTick(()=>{
-				this.getElInfo();
-			})
-		}
+        }  
     }  
 </script>  
 
