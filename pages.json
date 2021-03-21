@@ -33,6 +33,12 @@
         ,{
             "path" : "pages/ruituProducts/RMAPS-ST-3H/RMAPS-ST-3H"
         }
+        ,{
+            "path" : "pages/globalValue/EC_thin/EC_thin"
+        }
+        ,{
+            "path" : "pages/globalValue/Grapes/Grapes"
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

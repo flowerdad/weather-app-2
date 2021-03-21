@@ -52,12 +52,10 @@
 			</view>
 			<view class="u-type-primary-bg" slot="body">
 				<u-cell-group :border="false">
-					<view v-for="(item,index) in forecastProducts" :key="index" v-if='index < isForecastProductsExtend'>
-						<navigator hover-class="none" :url="item.url" navigateTo >
-							<u-cell-item :border-bottom='index==forecastProducts.length-1?false:true' :title="item.name" :arrow='false'hover-class="hover-class">
-								<u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
-							</u-cell-item>
-						</navigator>
+					<view v-for="(item,index) in forecastProducts" :key="index" v-if='index < isForecastProductsExtend' @click="pdf">
+						<u-cell-item :border-bottom='index==forecastProducts.length-1?false:true' :title="item.name" :arrow='false'hover-class="hover-class">
+							<u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
+						</u-cell-item>
 					</view>
 				</u-cell-group>
 			</view>
@@ -69,12 +67,10 @@
 			</view>
 			<view class="u-type-primary-bg" slot="body">
 				<u-cell-group :border="false">
-					<view v-for="(item,index) in serviceProducts" :key="index" v-if='index < isServiceProductsExtend'>
-						<navigator hover-class="none" :url="item.url" navigateTo >
-							<u-cell-item :border-bottom='index==serviceProducts.length-1?false:true' :title="item.name" :arrow='false'hover-class="hover-class">
-								<u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
-							</u-cell-item>
-						</navigator>
+					<view v-for="(item,index) in serviceProducts" :key="index" v-if='index < isServiceProductsExtend' @click="pdf">
+						<u-cell-item :border-bottom='index==serviceProducts.length-1?false:true' :title="item.name" :arrow='false'hover-class="hover-class">
+							<u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
+						</u-cell-item>
 					</view>
 				</u-cell-group>
 			</view>
@@ -276,11 +272,13 @@
 					{
 						icon: 'in',
 						color: 'red',
-						name: 'EC_thin'
+						name: 'EC_thin',
+						url:'/pages/globalValue/EC_thin/EC_thin'
 					}, {
 						icon: 'in',
 						color: 'orange',
-						name: 'Grapes预报'
+						name: 'Grapes预报',
+						url:'/pages/globalValue/Grapes/Grapes'
 					}
 				],
 			};
@@ -289,6 +287,20 @@
 
 		},
 		methods: {
+			pdf(){
+				uni.downloadFile({
+				  url: 'http://www.gov.cn/zhengce/pdfFile/2021_PDF.pdf',
+				  success: function (res) {
+				    var filePath = res.tempFilePath;
+				    uni.openDocument({
+				      filePath: filePath,
+				      success: function (res) {
+				        console.log('打开文档成功');
+				      }
+				    });
+				  }
+				});
+			},
 			highObservationExtend(){
 				this.isHighObservationExtend==4?this.isHighObservationExtend=this.highObservation.length:this.isHighObservationExtend=4
 			},
