@@ -1,8 +1,8 @@
 <template>  
     <view>
-    	<u-row gutter="0">
+    	<u-row gutter="0" style='background-color: #fff;'>
     		<u-col span="10">
-    			<u-tabs v-if="list.length != 0" :list="list" :gutter='20' :height='60' :show-bar='false' :active-item-style="tabsStyle" bg-color="#f8f8f8" :current="current" @change="change"></u-tabs>
+    			<u-tabs v-if="list.length != 0" :list="list" :gutter='20' :current="current" @change="change"></u-tabs>
     			<view v-else class="u-light-color">无选项</view>
     		</u-col>
 			<u-col span="2" @click='popup'>
@@ -11,9 +11,9 @@
 				</view>
 			</u-col>
     	</u-row>
-		<u-popup v-model="show" mode="bottom" border-radius="14" height="50%" :closeable='popupMini?false:true'>
+		<u-popup v-model="show" mode="right" border-radius="14" width="30%">
 			<p class='u-text-center u-type-info-dark u-padding-30'>快速选择</p>
-			<view :class="popupMini?'padding-mini':''">
+			<view>
 				<u-tag class="u-margin-15" :text="item.name" :mode="current==index?'dark':'plain'" v-for="(item,index) in list" :key='index' @click="tag(index)"/>
 			</view>
 		</u-popup>

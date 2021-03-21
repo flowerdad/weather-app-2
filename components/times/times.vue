@@ -1,6 +1,6 @@
 <template>  
 	<view class="popup-tool-time">
-		<u-row gutter="12">
+		<u-row gutter="0">
 			<u-col span="2">
 				<view class="u-text-center">
 					<u-icon name="play-circle-fill" size='40' color="#f17675"></u-icon>
@@ -102,6 +102,7 @@
         methods: { 
 			change(index){
 				this.current=index;
+				this.list[index].index=index;
 				this.$emit('value',this.list[index])
 			},
 			tag(index){

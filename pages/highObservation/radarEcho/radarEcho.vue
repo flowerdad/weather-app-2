@@ -1,7 +1,17 @@
 <template>
 	<view class="content">
 		<u-navbar back-text="返回" title='雷达回波' :isBack="true" :background="background" title-color="#ffffff" back-icon-color='#ffffff' :back-text-style="{color:'#ffffff'}" :border-bottom='false'></u-navbar>
-		<u-tabs :list="list" :gutter='20' :show-bar='false' :current="listCurrent" @change="listChange"></u-tabs>
+		<!-- <u-row gutter="0" style='background-color: #fff;'>
+			<u-col span="10">
+				<u-tabs :list="list" :gutter='20' :show-bar='true' :current="listCurrent" @change="listChange"></u-tabs>
+			</u-col>
+			<u-col span="2" @click='popup'>
+				<view class="u-text-center" >
+					<u-icon name="grid" size='40' color="#55aaff"></u-icon>
+				</view>
+			</u-col>
+		</u-row> -->
+		<nav-selection :list='list' @value='listValue' key='list'></nav-selection>
 		<view class="page-box">
 			<u-row gutter="40" align='top'>
 				<u-col span="4" class="u-margin-top-20" v-for="(item,index) in products" :key='index' @click='popup(item)'>
@@ -37,11 +47,13 @@
 	import viewImg from "components/viewImg/viewImg.vue"; 
 	import times from "components/times/times.vue";
 	import typeSelection from "components/typeSelection/typeSelection.vue"; 
+	import navSelection from "components/navSelection/navSelection.vue"; 
 	export default {
 		components: {  
 		    viewImg ,
 			times,
-			typeSelection
+			typeSelection,
+			navSelection
 		},
 		data() {
 			let region_huabei={id:'',name:'华北'}
@@ -710,6 +722,10 @@
 						this.elevation=item.elevation;
 					}
 				})
+			},
+			listValue(e){
+				this.listCurrent=e.index;
+				this.products=this.list[e.index].products
 			},
 			elevationValue(e){
 				console.log(e.id+'-'+e.name)
