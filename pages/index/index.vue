@@ -4,6 +4,7 @@
 		<u-card :border="false"  :head-border-bottom="false" margin="30rpx 30rpx 0rpx 30rpx" :body-style="{'padding-top':'0px'}">
 			<view slot="head" @click='highObservationExtend'>
 				<text class="card-head-text">高空观测</text>
+				
 				<u-icon :name="isHighObservationExtend==4?'arrow-down':'arrow-up'" color='#999' :size="40" class='card-head-icon'></u-icon>
 			</view>
 			<view class="u-type-primary-bg" slot="body" ref='cardbg' >
