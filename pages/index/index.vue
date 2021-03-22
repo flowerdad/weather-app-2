@@ -86,7 +86,7 @@
                   <template v-for="(item,index) in forecastProducts">
                     <view :key="index" v-if='index < isForecastProductsExtend' @click="pdf">
                       <u-cell-item :border-bottom='index==forecastProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class">
-                        <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
+                        <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" class="u-margin-right-10" :style="{color:item.color}"></u-icon>
                       </u-cell-item>
                     </view>
                   </template>
@@ -103,7 +103,7 @@
                   <template v-for="(item,index) in serviceProducts">
                     <view :key="index" v-if='index < isServiceProductsExtend' @click="pdf">
                       <u-cell-item :border-bottom='index==serviceProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class">
-                        <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" :style="{color:item.color}"></u-icon>
+                        <u-icon slot="icon" size="32" :name="item.icon" custom-prefix="custom-icon" class="u-margin-right-10" :style="{color:item.color}"></u-icon>
                       </u-cell-item>
                     </view>
                   </template>
@@ -131,12 +131,12 @@
         <u-icon name="bell" class="v-icon"></u-icon>
       </view>
       <view class="tool-button menu">
-        <u-icon name="list" class="v-icon"></u-icon>
+        <u-icon name="list" class="v-icon" @click='systemShow=true'></u-icon>
       </view>
       <view class="tool-button location">
         <u-icon name="map" class="v-icon"></u-icon>
       </view>
-      <view class="tool-button tool-library">
+      <view class="tool-button tool-library" @click="toolLibraryShow=true">
         <u-icon name="grid" class="v-icon"></u-icon>
       </view>
       <view class="legend">
@@ -145,6 +145,87 @@
         <view class="legend-3">0 ℃</view>
       </view>
     </view>
+    <u-popup v-model="toolLibraryShow" mode="right" border-radius="14" width="80%">
+      <u-card :border="false" :head-border-bottom="false" margin="0rpx" border-radius='0' :body-style="{'padding-top':'0px'}" :head-style="{'background-color':'rgb(69,71,85)','padding-top':'70rpx'}">
+        <view slot="head" style="background-color:rgb(69,71,85);">
+          <text class="card-head-text" style="color:#eee">
+            <u-icon size="32" name="grid" class="u-margin-right-10"></u-icon> 产品
+          </text>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-cell-group :border="false">
+            <template v-for="(item,index) in popupProducts">
+              <view :key="index">
+                <u-cell-item :border-bottom='index==popupProducts.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class" @click="popupProductsClick(index)">
+                  <u-icon slot="icon" size="32" :name="item.icon" class="u-margin-right-10" :style="{color:item.color}"></u-icon>
+                  <u-icon slot="right-icon" size="32" name="checkbox-mark" :style="{color:popupProductsCurrent==index?'rgb(69,71,85)':'#fff'}"></u-icon>
+                </u-cell-item>
+              </view>
+            </template>
+          </u-cell-group>
+        </view>
+      </u-card>
+      <u-card :border="false" :head-border-bottom="false" margin="0rpx" border-radius='0' :body-style="{'padding-top':'0px'}" :head-style="{'background-color':'rgb(69,71,85)'}">
+        <view slot="head" style="background-color:rgb(69,71,85);">
+          <text class="card-head-text" style="color:#eee">
+            <u-icon size="32" name="grid" class="u-margin-right-10"></u-icon> 辅助功能
+          </text>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-cell-group :border="false">
+            <template v-for="(item,index) in auxiliary">
+              <view :key="index">
+                <u-cell-item :border-bottom='index==auxiliary.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class" @click="auxiliaryClick(index)">
+                  <u-icon slot="icon" size="32" :name="item.icon" class="u-margin-right-10" :style="{color:item.color}"></u-icon>
+                  <u-icon slot="right-icon" size="32" name="checkbox-mark" :style="{color:auxiliaryCurrent==index?'rgb(69,71,85)':'#fff'}"></u-icon>
+                </u-cell-item>
+              </view>
+            </template>
+          </u-cell-group>
+        </view>
+      </u-card>
+      <u-card :border="false" :head-border-bottom="false" margin="0rpx" border-radius='0' :body-style="{'padding-top':'0px'}" :head-style="{'background-color':'rgb(69,71,85)'}">
+        <view slot="head" style="background-color:rgb(69,71,85);">
+          <text class="card-head-text" style="color:#eee">
+            <u-icon size="32" name="grid" class="u-margin-right-10"></u-icon> 其他
+          </text>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-cell-group :border="false">
+            <template v-for="(item,index) in mapOther">
+              <view :key="index">
+                <u-cell-item :border-bottom='index==mapOther.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class" @click="auxiliaryClick(index)">
+                  <u-icon slot="icon" size="32" :name="item.icon" class="u-margin-right-10" :style="{color:item.color}"></u-icon>
+                  <!-- <u-icon slot="right-icon" size="32" name="checkbox-mark" :style="{color:auxiliaryCurrent==index?'rgb(69,71,85)':'#fff'}"></u-icon> -->
+                  <u-switch slot="right-icon" v-model="item.checked" size='40'></u-switch>
+                </u-cell-item>
+              </view>
+            </template>
+          </u-cell-group>
+        </view>
+      </u-card>
+    </u-popup>
+    <u-popup v-model="systemShow" mode="right" border-radius="14" width="80%">
+      <u-card :border="false" :head-border-bottom="false" margin="0rpx" border-radius='0' :body-style="{'padding-top':'0px'}" :head-style="{'background-color':'rgb(69,71,85)','padding-top':'70rpx'}">
+        <view slot="head" style="background-color:rgb(69,71,85);">
+          <text class="card-head-text" style="color:#eee">
+            <u-icon size="32" name="grid" class="u-margin-right-10"></u-icon> 系统
+          </text>
+        </view>
+        <view class="u-type-primary-bg" slot="body">
+          <u-cell-group :border="false">
+            <template v-for="(item,index) in system">
+              <view :key="index">
+                <u-cell-item :border-bottom='index==system.length-1?false:true' :title="item.name" :arrow='false' hover-class="hover-class" @click="popupProductsClick(index)">
+                  <u-icon slot="icon" size="32" :name="item.icon" class="u-margin-right-10" :style="{color:item.color}"></u-icon>
+                  <u-icon slot="right-icon" size="32" name="arrow-right" style="color:rgb(69,71,85)"></u-icon>
+                </u-cell-item>
+              </view>
+            </template>
+          </u-cell-group>
+        </view>
+      </u-card>
+    </u-popup>
   </view>
 </template>
 
@@ -369,6 +450,67 @@ export default {
           url: '/pages/globalValue/Grapes/Grapes'
         }
       ],
+      popupProductsCurrent: 0,
+      popupProducts: [
+        {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '雷达'
+        }, {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '卫星'
+        }, {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '预警'
+        }, {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: 'X波段'
+        }, {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: 'S波段'
+        }
+      ],
+      auxiliaryCurrent: 0,
+      auxiliary: [
+        {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '定位京津冀'
+        }, {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '测距'
+        }
+      ],
+      mapOther: [
+        {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '图例',
+          checked: true
+        }
+      ],
+      system: [
+        {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '问题反馈'
+        },
+        {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '关于'
+        },
+        {
+          icon: 'grid',
+          color: 'rgb(69,71,85)',
+          name: '检测系统更新'
+        }
+      ],
       uniWindow: {},
       scrollTop: 0,
       old: {
@@ -377,6 +519,8 @@ export default {
       scrollViewHeight: '100px',
       infoBgHeight: '0px',
       scrollY: false,
+      toolLibraryShow: false,
+      systemShow: false
     };
   },
   onLoad() {
@@ -441,6 +585,12 @@ export default {
     serviceProductsExtend() {
       this.isServiceProductsExtend == 4 ? this.isServiceProductsExtend = this.serviceProducts.length : this.isServiceProductsExtend = 4
     },
+    popupProductsClick(index) {
+      this.popupProductsCurrent = index;
+    },
+    auxiliaryClick(index) {
+      this.auxiliaryCurrent = index;
+    }
   },
   mounted() {
     this.$u.getRect('.info').then(res => {
