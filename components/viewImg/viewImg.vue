@@ -1,8 +1,8 @@
 <template>
   <view class='viewImg'>
     <movable-area scale-area :style="{width:width,height:height}">
-      <movable-view direction="all" :out-of-bounds='false' scale :scale-min="0.1" :style="{width:imageInfo.width+'upx',height:imageInfo.height+'upx'}">
-        <image :src="src" :style="{width:imageInfo.width+'upx',height:imageInfo.height+'upx'}"></image>
+      <movable-view direction="all" :out-of-bounds='false' scale :scale-min="0.1" :style="{width:viewInfo.width+'px',height:viewInfo.height+'px'}">
+        <image :src="src" mode='aspectFit'></image>
       </movable-view>
     </movable-area>
   </view>

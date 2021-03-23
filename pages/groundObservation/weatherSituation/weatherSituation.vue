@@ -3,7 +3,7 @@
     <u-navbar back-text="返回" title='实况' :isBack="true" :background="background" title-color="#ffffff" back-icon-color='#ffffff' :back-text-style="{color:'#ffffff'}" :border-bottom='false'></u-navbar>
     <view class="content">
       <view>
-        <u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" :is-scroll="false" swiperWidth="750" bg-color='#a0cfff' :border-bottom='true' inactive-color='#ffffff' bar-width='60'></u-tabs-swiper>
+        <u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" :is-scroll="false" swiperWidth="750" bg-color='rgb(69,71,85)' :border-bottom='true' inactive-color='#ffffff' bar-width='60'></u-tabs-swiper>
       </view>
       <swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
         <swiper-item class="swiper-item">
@@ -144,7 +144,7 @@ export default {
   data() {
     return {
       background: {
-        backgroundColor: '#a0cfff'
+        backgroundColor: 'rgb(69,71,85)'
       },
       list: [{
         name: 'GIS'
